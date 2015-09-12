@@ -58,14 +58,14 @@ func Upload(path string, maxMemory int64, w http.ResponseWriter, r *http.Request
 		return image, err
 	}
 
-	mm, err := magicmime.New(magicmime.MAGIC_MIME_TYPE | magicmime.MAGIC_SYMLINK | magicmime.MAGIC_ERROR)
+	err = magicmime.Open(magicmime.MAGIC_MIME_TYPE | magicmime.MAGIC_SYMLINK | magicmime.MAGIC_ERROR)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return image, err
 	}
 
-	mimetype, err := mm.TypeByFile(filePath)
+	mimetype, err := magicmime.TypeByFile(filePath)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
