@@ -24,7 +24,7 @@ type Image struct {
 
 func Upload(path string, maxMemory int64, w http.ResponseWriter, r *http.Request) (Image, error) {
 	image := Image{}
-	errRes := ersp.New(w)
+	errRes := ersp.New(w, r)
 	r.Body = http.MaxBytesReader(w, r.Body, maxMemory)
 
 	file, handler, err := r.FormFile("image")
